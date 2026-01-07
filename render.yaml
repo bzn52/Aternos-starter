@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: aternos-discord-bot
-    env: docker
-    dockerfilePath: ./Dockerfile
-    plan: free
