@@ -35,8 +35,6 @@ RUN which google-chrome-stable || echo "Chrome not found"
 
 WORKDIR /app
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-
 COPY package*.json ./
 RUN npm install
 
