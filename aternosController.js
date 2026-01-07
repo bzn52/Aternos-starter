@@ -15,9 +15,8 @@ class AternosController {
   }
 
   async initialize() {
-    this.browser = await puppeteer.launch({
+    const launchOptions = {
       headless: true,
-      executablePath: "/usr/bin/google-chrome-stable",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -30,7 +29,19 @@ class AternosController {
         "--single-process",
         "--no-zygote",
       ],
-    });
+    };
+
+    // Only set executablePath if Chrome exists at that location
+    try {
+      const fs = await import("fs");
+      if (fs.existsSync("/usr/bin/google-chrome-stable")) {
+        launchOptions.executablePath = "/usr/bin/google-chrome-stable";
+      }
+    } catch (e) {
+      console.log("Using default Chromium");
+    }
+
+    this.browser = await puppeteer.launch(launchOptions);
     this.page = await this.browser.newPage();
     await this.page.setViewport({ width: 1920, height: 1080 });
 
