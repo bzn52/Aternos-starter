@@ -17,8 +17,7 @@ class AternosController {
   async initialize() {
     this.browser = await puppeteer.launch({
       headless: true,
-      executablePath:
-        process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium",
+      executablePath: "/usr/bin/google-chrome-stable",
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -28,6 +27,8 @@ class AternosController {
         "--disable-features=IsolateOrigins",
         "--disable-site-isolation-trials",
         "--window-size=1920,1080",
+        "--single-process",
+        "--no-zygote",
       ],
     });
     this.page = await this.browser.newPage();
