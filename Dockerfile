@@ -30,10 +30,12 @@ RUN apt-get update && apt-get install -y \
     && rm google-chrome-stable_current_amd64.deb \
     && rm -rf /var/lib/apt/lists/*
 
+# Verify Chrome installation
+RUN which google-chrome-stable || echo "Chrome not found"
+
 WORKDIR /app
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 COPY package*.json ./
 RUN npm install
